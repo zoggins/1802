@@ -1,0 +1,10 @@
+                        ; PROGRAM 1 -- BLINK Q FAST
+                        		
+   0000                 		ORG		$0000
+                        
+   0000   7b            		SEQ				; Set Q		
+   0001   7a            		REQ				; Reset Q
+   0002   30 00         		BR		$00		; Repeat Forever
+                        
+   0004                 		END
+

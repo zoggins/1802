@@ -1,0 +1,20 @@
+                        ; PROGRAM 1 -- BLINK Q FAST
+                        		
+   0000                 		ORG		$0000
+                        
+   0002                 R2		EQU		$02
+                        
+   0000   f8 49         START:	LDI		$49		; LOAD 0x49
+   0002   b2            		PHI		R2		; Put it in the HI half of register 2
+   0003   22            LOOP:	DEC		R2		; Decrement register 2
+   0004   92            		GHI		R2		; Get the HI half of register 2
+   0005   3a 03         		BNZ		LOOP	; Branch if Not Zero
+   0007   cd            		LSQ				; Long Skip over next 2 instructions if Q=1...
+   0008   7b            		SEQ				; ...if Q was 0, then SEt Q=1
+   0009   38            		SKP				; ...and SKIP next instruction
+   000a   7a            		REQ				; ekse Q was 1, so REset Q=0
+   000b   30 00         		BR		START	; BRanch unconditionally back to START
+                        
+   000d                 		END
+0003  LOOP          0002  R2            0000  START         
+

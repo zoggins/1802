@@ -1,0 +1,30 @@
+                        ; PROGRAM 3 -- READ SWITCHES AND DISPLAY VALUES IN LEDS
+                        		
+   0000                 		ORG		$0000
+                        
+   0000                 R0		EQU		$00
+   0001                 R1		EQU		$01
+                        
+   0000   e1            START:	SEX		$01		; Set X register to 1
+   0001   90            		GHI		R0		; Get HI bute of register 0 in D (which is 0; so this sets D=0)
+   0002   b1            		PHI		R1		; Put D in HI byte of register 1 (so R1=00xx)
+   0003   f8 13         		LDI		VAR		; Load D Immediately with address of VAR
+   0005   a1            		PLO		R1		; Put D in LOW half of R1 (so R1=0013)
+   0006   6c            		INP		4		; INP port 4 (front panel switches) & write to D and memory at (R1)
+   0007   64            		OUT		4		; OUTput to port 4 (front panel LEDSs) contents of memory at (R1)
+   0008   cd            		LSQ				; Long Skip over next 2 instructions if Q=1...
+   0009   7b            		SEQ				; ...if Q was 0, then set Q=1
+   000a   38            		SKP				; ...and SKIP next instructions
+   000b   7a            		REQ				; else Q was 1, so Reset Q=0
+                        						; (At this point, D=the value read from the switches)
+   000c   ff 01         LOOP:	SMI		1		; Subtract Memory Immediately from D
+   000e   3a 0c         		BNZ		LOOP	; Branch if Not Zero back to LOOP
+   0010   7a            		REQ				; Reset Q
+   0011   30 00         		BR		START	; BRanch unconditionally back to START
+                        
+   0013   00            VAR		DB		0		; Address used by INP and OUT for the switch and LED values
+                        
+   0014                 		END
+000c  LOOP          0000  R0            0001  R1            0000  START     
+0013  VAR           
+

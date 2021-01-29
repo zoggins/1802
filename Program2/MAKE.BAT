@@ -1,0 +1,1 @@
+..\a18.exe Program2.ASM -o Program2.ihex -l Program2.LST
